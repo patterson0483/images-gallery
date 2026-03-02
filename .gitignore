@@ -1,5 +1,21 @@
+# dependencies
 node_modules/
+
+# production build
 build/
+
+# cache
 .eslintcache
+
+# editor
 .vscode/
+
+# env files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc
+.DS_Store
