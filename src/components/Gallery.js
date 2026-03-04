@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from 'react-bootstrap';
 
 function Gallery() {
   return (

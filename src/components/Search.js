@@ -1,5 +1,4 @@
-import React from 'react';
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 
 const Search = ({ word, setWord, handleSearchSubmit }) => {
   return (
@@ -9,8 +8,8 @@ const Search = ({ word, setWord, handleSearchSubmit }) => {
           <Form onSubmit={handleSearchSubmit}>
             <Row>
               <Col xs={9}>
-                <Form.Control 
-                  placeholder="Search for new image..." 
+                <Form.Control
+                  placeholder="Search for new image..."
                   type="text"
                   value={word}
                   onChange={(event) => setWord(event.target.value)}
