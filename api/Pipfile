@@ -11,6 +11,7 @@ jinja2 = "==2.11.3"
 click = "==7.1.2"
 itsdangerous = "==1.1.0"
 markupsafe = "==1.1.1"
+requests = "==2.25.1"
 
 [dev-packages]
 
