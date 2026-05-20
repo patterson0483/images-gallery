@@ -1,36 +1,21 @@
 # Python
-api/.venv/
-api/__pycache__/
-*.pyc
-
-# Flask env
-api/.env.local
-api/.flaskenv
-
-# React
-frontend/node_modules/
-frontend/build/
-
-# OS/editor
-.DS_Store
-.vscode/
-
-# Logs
-*.log
-
-
-# Python virtual environments
 .venv/
 venv/
 env/
-
-# Python cache
 __pycache__/
 *.pyc
+
+# Environment files
+.env.local
+.flaskenv
 
 # React
 node_modules/
 build/
 
-# env files
-.env.local
+# Editor/OS
+.vscode/
+.DS_Store
+
+# Logs
+*.log
