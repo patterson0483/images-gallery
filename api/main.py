@@ -58,9 +58,9 @@ def images():
         image = request.get_json()
         result = images_collection.insert_one(image)
 
-        return jsonify({
+        return {
             "message": "Image saved successfully",
-            "id": str(result.inserted_id)
-        }), 201
+            "inserted_id": str(result.inserted_id)
+        }, 201
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5050, debug=True)
