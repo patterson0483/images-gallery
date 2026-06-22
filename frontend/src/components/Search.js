@@ -15,7 +15,7 @@ const Search = ({ word, setWord, handleSubmit }) => {
                   onChange={(event) => setWord(event.target.value)}
                 />
               </Col>
-              <Col xs={3}>
+              <Col>
                 <Button variant="primary" type="submit" className="w-100">
                   Search
                 </Button>
