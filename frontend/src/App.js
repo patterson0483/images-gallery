@@ -15,7 +15,7 @@ const App = () => {
 
   const getSavedImages = async () => {
     try {
-      const res = await axios.get(`${API_URL}/saved-images`);
+      const res = await axios.get(`${API_URL}/images`);
       setImages(res.data || []);
     } catch (err) {
       console.log(err);
@@ -29,40 +29,79 @@ const App = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('sending axios request');
-    console.log(word);
-
     try {
       const res = await axios.get(`${API_URL}/new-image?query=${word}`);
 
-      const newImage = { ...res.data, title: word };
+      const newImage = {
+        ...res.data,
+        title: word,
+      };
 
-      await axios.post(`${API_URL}/images`, newImage);
-
-      console.log('adding found image to state');
-      setImages([newImage, ...images]);
-
-      console.log('clear search form');
+      setImages((currentImages) => [newImage, ...currentImages]);
       setWord('');
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDeleteImage = (id) => {
-    setImages(images.filter((image) => image.id !== id));
+  const handleDeleteImage = async (image) => {
+    try {
+      if (image.saved && image._id) {
+        await axios.delete(`${API_URL}/images/${image._id}`);
+      }
+
+      setImages((currentImages) =>
+        currentImages.filter(
+          (currentImage) =>
+            (currentImage._id || currentImage.id) !== (image._id || image.id),
+        ),
+      );
+    } catch (err) {
+      console.log(err.response?.data || err);
+    }
+  };
+
+  const handleSaveImage = async (id) => {
+    const imageToSave = images.find((image) => image.id === id);
+
+    if (!imageToSave) {
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${API_URL}/images`, {
+        ...imageToSave,
+        saved: true,
+      });
+
+      if (res.data?.inserted_id) {
+        setImages((currentImages) =>
+          currentImages.map((image) =>
+            image.id === id ? { ...image, saved: true } : image,
+          ),
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div>
       <Header title="Images Gallery" />
       <Search word={word} setWord={setWord} handleSubmit={handleSearchSubmit} />
+
       <Container>
         <Row xs={1} md={2} lg={3} className="mt-4">
           {images.length === 0 && <Welcome />}
+
           {images.map((image, i) => (
-            <Col key={i} className="pb">
-              <ImageCard image={image} onDelete={handleDeleteImage} />
+            <Col key={image.id || image._id || i} className="pb">
+              <ImageCard
+                image={image}
+                onDelete={handleDeleteImage}
+                saveImage={handleSaveImage}
+              />
             </Col>
           ))}
         </Row>
